@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Buttons with C Programs</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+display: flex;
+justify-content: flex-start;
+align-items: flex-start;
+flex-direction: column;
+height: 100%;
+padding: 10px;
+overflow-y: auto; /* Allow scrolling */
+}
+.container {
+width: 100%;
+max-width: 600px;
+margin: auto;
+display: flex;
+flex-direction: column;
+gap: 20px;
+flex-grow: 1; /* Allow container to grow and fill available space */
+}
+/* Blue button styles with glowing effect */
+.button {
+padding: 12px 25px;
+font-size: 18px;
+background-color: #0364cb; /* Blue color */
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+box-shadow: 0 0 5px #007BFF;
+transition: all 0.3s ease-in-out;
+}
+/* Glowing effect when hovering over the button */
+.button:hover {
+background-color: #033e7c; /* Darker blue for hover */
+box-shadow: 0 0 20px #28a0d7, 0 0 30px #2e93ff, 0 0 40px #007BFF; /* Glowing
+effect */
+transform: scale(1.05); /* Slightly enlarges the button */
+}
+/* Content block styles */
+.content {
+display: none;
+margin-top: 10px;
+padding: 20px;
+background-color: #dfdbdb;
+border-radius: 8px;
+overflow: auto; /* Make sure content is scrollable if needed */
+max-height: 60vh; /* Limit the max height to avoid pushing page content off-screen */
+}
+/* Styling the program code block */
+.content pre {
+font-size: 14px;
+font-family: Arial;
+white-space: pre-wrap;
+word-wrap: break-word;
+color: #000000;
+margin: 0;
+}
+/* Styling for the links */
+.content a {
+color: #00366b;
+text-decoration: none;
+}
+.content a:hover {
+text-decoration: underline;
+}
+/* Active content when shown */
+.active {
+display: block;
+}
+</style>
+
+<h1>Data Structure Lab Programs</h1>
+
+</head>
+<body>
+<div class="container">
+<button class="button" onclick="showProgram('linearSearch')">01 a. Linear
+Search</button>
+<div id="linearSearch" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+int linearSearch(int arr[], int size, int target) 
+{
+    for (int i = 0; i &lt; size; i++) 
+    {
+      if (arr[i] == target)
+      {
+       return i; // target found at index i
+      }
+    }
+    return -1; // target not found
+}
+int main()
+{
+   int arr[] = {5, 3, 8, 4, 2};
+   int size = sizeof(arr) / sizeof(arr[0]);
+   int target = 8;
+   int result = linearSearch(arr, size, target);
+   if (result != -1)
+   {
+      printf("Found at index %d\n", result);
+   }
+    else 
+   {
+     printf("Not found\n");
+   }
+   return 0;
+}
+</pre>
+<a href="https://youtu.be/ZR5HlCjLPNw?si=7wwDSZNnlFrh2q8y"
+target="_blank">Watch Linear Search Video</a>
+</div>
+
+<button class="button" onclick="showProgram('binarySearch')">01 b. Binary
+Search</button>
+<div id="binarySearch" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+
+int binarySearch(int arr[], int size, int target) 
+{
+   int left = 0, right = size - 1;
+   while (left &lt;= right)
+   {
+   int mid = left + (right - left) / 2;
+   if (arr[mid] == target)
+      return mid; // target found
+      else if (arr[mid] &lt; target)
+      left = mid + 1;
+     else
+      right = mid - 1;
+    }
+    return -1; // target not found
+}
+int main()
+{
+   int arr[] = {1, 3, 4, 5, 8, 9, 10};
+   int size = sizeof(arr) / sizeof(arr[0]);
+   int target = 5;
+   int result = binarySearch(arr, size, target);
+   if (result != -1)
+   {
+     printf("Found at index %d\n", result);
+   } else {
+   printf("Not found\n");
+   }
+   return 0;
+}
+</pre>
+<a href="https://youtu.be/MQJjMvd-LFE?si=aGbJ_pQTloSNkL-A"
+target="_blank">Watch Binary Search Video</a>
+</div>
+
+<button class="button" onclick="showProgram('bubbleSort')">02. Bubble Sort</button>
+<div id="bubbleSort" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+void bubbleSort(int arr[], int size)
+{
+    for (int i = 0; i &lt; size-1; i++) 
+    {
+        for (int j = 0; j &lt; size-i-1; j++) 
+        {
+            if (arr[j] &gt; arr[j+1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+int main() 
+{
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, size);
+    printf("Sorted array: ");
+    for (int i = 0; i &lt; size; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}
+</pre>
+<a href="https://youtu.be/o4bAoo_gFBU" target="_blank">Watch Bubble Sort
+Video</a>
+</div>
+
+<button class="button" onclick="showProgram('insertionSort')">03. Insertion & Selection Sort
+Sort</button>
+<div id="insertionSort" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+
+// Function to perform Insertion Sort
+void insertionSort(int arr[], int n)
+{
+    for (int i = 1; i < n; i++)
+   {
+    int key = arr[i];
+    int j = i - 1;
+    while (j >= 0 && arr[j] < key)
+    {
+    // Sorting in descending order
+    arr[j + 1] = arr[j];
+    j = j - 1;
+    }
+    arr[j + 1] = key;
+    }
+}
+// Function to perform Selection Sort
+void selectionSort(int arr[], int n)
+{
+for (int i = 0; i < n - 1; i++)
+{
+    int max_idx = i;
+    for (int j = i + 1; j < n; j++)
+    {
+        if (arr[j] > arr[max_idx])
+        {
+            // Sorting in descending order
+            max_idx = j;
+        }       
+    }
+    // Swap
+    int temp = arr[max_idx];
+    arr[max_idx] = arr[i];
+    arr[i] = temp;
+}
+}
+
+// Function to print the array
+void printArray(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Main function
+int main()
+{
+    int arr[] = {75, 8, 1, 16, 48, 3, 7, 0};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int insertionSorted[n], selectionSorted[n];
+    // Copy original array for both sorting methods
+    for (int i = 0; i < n; i++) 
+    {
+        insertionSorted[i] = arr[i];
+        selectionSorted[i] = arr[i];
+    }
+    // Perform Insertion Sort
+    insertionSort(insertionSorted, n);
+    printf("Insertion Sort (Descending): ");
+    printArray(insertionSorted, n);
+
+    // Perform Selection Sort
+    selectionSort(selectionSorted, n);
+    printf("Selection Sort (Descending): ");
+    printArray(selectionSorted, n);
+    return 0;
+}
+<a href="https://youtu.be/8qrWD2P1IfU?si=YmaM5dCKyL1PFMa8"
+target="_blank">Watch Insertion Sort Video</a>
+<a href="https://youtu.be/8qrWD2P1IfU?si=YmaM5dCKyL1PFMa8"
+target="_blank">Watch Selection Sort Video</a>
+</div>
+
+<button class="button" onclick="showProgram('unorderedlinkedList')">04. Unordered Linked List</button>
+<div id="unorderedlinkedList" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+   
+// Structure for a node in the linked list
+struct Node 
+{
+    int data;
+     struct Node* next;
+};
+
+ // Function to create a new node
+struct Node* createNode(int value) 
+{
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to display the linked list
+void displayList(struct Node* head)
+{
+    struct Node* temp = head;
+    while (temp != NULL) 
+    {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+// Function to insert a node at the end
+void insertEnd(struct Node** head, int value) 
+{
+    struct Node* newNode = createNode(value);
+    if (*head == NULL) 
+    {
+        *head = newNode;
+    }
+    else 
+    {
+        struct Node* temp = *head;
+        while (temp->next != NULL) 
+        {
+            temp = temp->next;
+        }
+           temp->next = newNode;
+    }
+        printf("Inserted %d: ", value);
+        displayList(*head);
+}
+
+        
+// Function to delete a node with a given value
+void deleteNode(struct Node** head, int value) 
+{
+    struct Node* temp = *head, *prev = NULL;
+    // If the head node contains the value
+    if (temp != NULL && temp->data == value) 
+    {
+        *head = temp->next;
+        free(temp);
+        printf("Deleted %d: ", value);
+        displayList(*head);
+        return;
+    }
+
+    // Search for the node to delete
+    while (temp != NULL && temp->data != value) 
+    {
+        prev = temp;
+        temp = temp->next;            
+    }
+        if (temp == NULL) 
+        {
+            printf("Value %d not found in the list.\n", value);
+            return;
+        }
+            prev->next = temp->next;
+            free(temp);
+            printf("Deleted %d: ", value);
+            displayList(*head);           
+}
+// Main function
+int main() 
+{       
+    struct Node* head = NULL;
+    // Insert elements
+    insertEnd(&head, 61);
+    insertEnd(&head, 16);
+    insertEnd(&head, 8);
+    insertEnd(&head, 27);
+    // Delete elements
+    deleteNode(&head, 8);
+    deleteNode(&head, 61);
+    deleteNode(&head, 27);
+    return 0;
+}        
+
+</pre>
+<a href="https://youtu.be/4URRyhUlQco?si=dsJHawnuhS5xPKiL"
+target="_blank">Watch Unordered Linked List Video</a>
+</div>
+
+<button class="button" onclick="showProgram('OrderedLinkedList')">05. Ordered Linkedlist</button>
+    <div id="OrderedLinkedList" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;    
+#include &lt;stdlib.h&gt;
+
+// Structure for a node in the linked list
+    struct Node 
+    {
+        int data;
+        struct Node* next;
+    };
+// Function to create a new node
+struct Node* createNode(int value) 
+{
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+// Function to display the linked list
+void displayList(struct Node* head) 
+{
+    struct Node* temp = head;
+    while (temp != NULL) 
+    {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+// Function to insert a node in an ordered manner
+void insertOrdered(struct Node** head, int value) 
+{
+    struct Node* newNode = createNode(value);
+    // If the list is empty or the new node should be the first node
+    if (*head == NULL || (*head)->data >= value) 
+    {
+        newNode->next = *head;
+        *head = newNode;
+    } 
+    else 
+    {
+         struct Node* temp = *head;     
+        // Find the correct position to insert
+        while (temp->next != NULL && temp->next->data < value)
+        {
+            temp = temp->next;
+        }
+        // Insert the new node in the correct position
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+         printf("Inserted %d: ", value);
+        displayList(*head);
+}
+// Function to delete a node with a given value
+void deleteNode(struct Node** head, int value) 
+{
+    struct Node* temp = *head, *prev = NULL;
+    // If the head node itself contains the value
+    if (temp != NULL && temp->data == value)
+    {
+         *head = temp->next;
+        free(temp);
+        printf("Deleted %d: ", value);
+        displayList(*head);
+        return;
+    }
+     // Search for the node to delete
+    while (temp != NULL && temp->data != value)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+     if (temp == NULL) 
+     {
+        printf("Value %d not found in the list.\n", value);
+        return;
+     }
+         prev->next = temp->next;
+        free(temp);
+         printf("Deleted %d: ", value);
+         displayList(*head);
+}
+// Main function
+int main() 
+{
+     struct Node* head = NULL;
+    // Insert elements in sorted order
+    insertOrdered(&head, 61);
+     insertOrdered(&head, 16);
+     insertOrdered(&head, 8);
+     insertOrdered(&head, 27);
+     // Delete elements
+     deleteNode(&head, 8);
+     deleteNode(&head, 61);
+     deleteNode(&head, 27);
+     return 0;
+}           
+</pre>
+<a href="https://youtu.be/4URRyhUlQco?si=dsJHawnuhS5xPKiL"
+target="_blank">Watch Ordered Linkedlist Video</a>
+</div>
+
+<button class="button" onclick="showProgram('')">06. String Operations
+    </button>
+<div id="" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+    
+</pre>
+<a href=""
+    target="_blank">Watch  Video</a>
+</div>
+
+<button class="button" onclick="showProgram('towerOfHanoi')">07. Tower Of Hanoi
+</button>
+<div id="towerOfHanoi" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+
+void towerOfHanoi(int n, char from, char to, char aux) 
+{
+    if (n == 1)    
+    {
+        printf("Move disk 1 from %c to %c\n", from, to);
+        return;
+    }
+    towerOfHanoi(n-1, from, aux, to);
+    printf("Move disk %d from %c to %c\n", n, from, to);
+    towerOfHanoi(n-1, aux, to, from);
+}
+int main()  
+{
+    int n = 3; // Number of disks
+    towerOfHanoi(n, 'A', 'C', 'B');
+    return 0;
+}
+
+</pre>
+<a href="https://youtu.be/8qrWD2P1IfU?si=OidYoNER6Xbe5y5p"
+target="_blank">Watch Tower Of Hanoi Video</a>
+</div>
+
+<button class="button" onclick="showProgram('recursionGCD')">08. Recursion
+GCD</button>
+<div id="recursionGCD" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+int gcd(int a, int b) 
+{
+    if (b == 0) 
+    {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+int main() 
+{
+    int a = 56, b = 98;    
+    printf("GCD of %d and %d is %d\n", a, b, gcd(a, b));
+    return 0;
+}
+</pre>
+<a href="https://youtu.be/6lrQ8w2zC1g?si=NGd6mAAuJmLsOLrv"
+target="_blank">Watch Recursion GCD Video</a>
+</div>
+
+<button class="button" onclick="showProgram('stack')">09. Working of Stack</button>
+<div id="stack" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#define MAX 5
+int stack[MAX];
+int top = -1;
+void push(int value)
+{
+    if (top == MAX - 1) 
+    {
+     printf("Stack Overflow\n");
+    } 
+    else 
+    {
+      stack[++top] = value;
+      printf("Pushed %d to stack\n", value);
+    }
+}
+void pop()
+{
+    if (top == -1) 
+    {
+        printf("Stack Underflow\n");
+    } else {
+    printf("Popped %d from stack\n", stack[top--]);
+    }
+}
+void display()
+{
+    if (top == -1)
+    {
+        printf("Stack is empty\n"); 
+    } else {
+    printf("Stack contents: ");
+    for (int i = top; i &gt;= 0; i--)
+    {
+        printf("%d ", stack[i]);
+    }
+    printf("\n");
+    }
+}
+int main() 
+{
+    push(10);
+    push(20);
+    push(30);
+    display();
+    pop();
+    display();
+    return 0;
+}
+</pre>
+<a href="https://youtu.be/kI-NFJXx3wo?si=5eLiHhB2Z79NGCGF" target="_blank">Watch
+Stack Working Video</a>
+</div>
+
+<button class="button" onclick="showProgram('linear')">10. Linear Queue
+</button>
+<div id="linear" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#define SIZE 10
+
+int queue[SIZE];
+int front = -1, rear = -1;
+
+// Function to display the queue
+void displayQueue() 
+{
+if (front == -1 || front > rear)
+{
+    printf("Queue is empty\n");
+    return;
+}
+    printf("Queue: ");
+    for (int i = front; i <= rear; i++)
+    {
+        printf("%d ", queue[i]);
+    }
+    printf("\n");
+}
+
+// Function to insert an element into the queue
+void insert(int value) 
+{
+    if (rear == SIZE - 1) 
+    {
+        printf("Queue is full, cannot insert %d\n", value);
+        return;
+    }
+    if (front == -1)
+    front = 0; // First element insertion
+    rear++;
+    queue[rear] = value;
+    printf("Inserted %d -> ", value);
+    displayQueue();
+}
+
+// Function to delete an element from the queue
+void deleteElement()
+{
+    if (front == -1 || front > rear) 
+    {
+        printf("Queue is empty, cannot delete\n");
+        return;
+    }
+    printf("Deleted %d -> ", queue[front]);
+    front++;
+    displayQueue();
+}
+
+// Main function
+int main()
+{
+    // Insert elements
+    insert(45);
+    insert(34);
+    insert(10);
+    insert(63);
+    insert(3);
+
+    // Delete three elements
+    deleteElement();
+    deleteElement();
+    deleteElement();
+    return 0;
+}
+
+
+</pre>
+<a href="https://youtu.be/DvO3nAUn6qA?si=jovmazCHa2CJIkik"
+target="_blank">Watch Linear Queue Video</a>
+</div>
+
+<button class="button" onclick="showProgram('Circular')">11. Circular Queue
+</button>
+<div id="Circular" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#define SIZE 5
+
+int queue[SIZE];
+int front = -1, rear = -1;
+
+// Function to insert an element in the circular queue
+void enqueue(int value) 
+{
+    if ((rear + 1) % SIZE == front) 
+    {
+        printf("Queue is Full! Cannot insert %d\n", value);
+        return;
+    }
+    if (front == -1 && rear == -1)  
+    {
+    front = rear = 0;
+    } else {
+    rear = (rear + 1) % SIZE;
+    }
+    queue[rear] = value;
+    printf("Inserted %d\n", value);
+}
+
+// Function to delete an element from the circular queue
+void dequeue() 
+{
+    if (front == -1 && rear == -1) 
+    {
+        printf("Queue is Empty! Cannot delete\n");
+        return;
+    }
+    printf("Deleted %d\n", queue[front]);
+    if (front == rear) {
+        // Only one element was present
+        front = rear = -1;
+    } else {
+    front = (front + 1) % SIZE;
+    }
+}
+
+// Function to display elements of the circular queue
+void display() 
+{
+    if (front == -1 && rear == -1)
+    {
+        printf("Queue is Empty!\n");
+        return;
+    }
+    printf("Queue elements: ");
+    int i = front;
+    while (1) 
+    {
+        printf("%d ", queue[i]);
+        if (i == rear)
+        break;
+        i = (i + 1) % SIZE;
+    }
+    printf("\n");
+}
+
+// Main function
+int main() 
+{
+    // Testing the circular queue operations
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+    enqueue(50);
+    enqueue(60); // Should show "full"
+
+    display();
+
+    dequeue();
+    dequeue();
+
+    display();
+
+    enqueue(60);
+    enqueue(70);
+
+    display();
+
+    enqueue(80);
+     // Should show "full" again
+    return 0;
+}
+</pre>
+<a href=""
+target="_blank">Watch  Video</a>
+</div>
+
+<button class="button" onclick="showProgram('intopost')">12. Infix Expression to Postfix Expression
+</button>
+<div id="intopost" class="program-container content">
+<pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;ctype.h&gt; // for isalnum()
+    #include &lt;string.h&gt; // for strlen()
+    #define SIZE 100
+    // Stack implementation
+    char stack[SIZE];
+    int top = -1;
+    // Push element to stack
+    void push(char c)
+    {
+    stack[++top] = c;
+    }
+
+    // Pop element from stack
+    char pop() 
+    {
+       if (top == -1)
+       return -1;
+       return stack[top--];
+    }
+
+    // Return precedence of operators
+    int precedence(char op) 
+    {
+        if (op == '^') return 3; // Highest precedence
+        if (op == '*' || op == '/') return 2;
+        if (op == '+' || op == '-') return 1;
+        return 0;
+    }
+
+    // Function to convert infix to postfix
+    void infixToPostfix(char infix[], char postfix[])
+    {
+        int i, j = 0;
+        char c;
+        for (i = 0; infix[i] != '\0'; i++) 
+        {
+        c = infix[i];
+        // If operand (like x, y, 5), add to postfix expression
+        if (isalnum(c)) 
+        {
+            postfix[j++] = c;
+         }
+        // If opening parenthesis, push to stack
+        else if (c == '(') 
+         {
+            push(c);
+         }
+         // If closing parenthesis, pop until '(' is found
+         else if (c == ')')
+        {
+            while (stack[top] != '(') 
+            {
+            postfix[j++] = pop();
+             }
+            pop(); // pop '('
+        }
+        // If operator, pop from stack to postfix if operator at top has higher or equal precedence
+        else
+        {
+             while (top != -1 && precedence(stack[top]) >= precedence(c))
+            {
+                postfix[j++] = pop();
+            }
+        push(c);
+        }
+    }
+
+        // Pop any remaining operators in the stack
+         while (top != -1) 
+        {
+            postfix[j++] = pop();
+        }
+        postfix[j] = '\0'; // Null-terminate the postfix string
+}
+    int main() 
+    {
+         char infix[SIZE], postfix[SIZE];
+         // Ask user to input infix expression
+         printf("Enter an infix expression: ");
+         scanf("%s", infix); // input expression without spaces
+        // Convert to postfix
+         infixToPostfix(infix, postfix);
+         // Display result
+        printf("Postfix Expression: %s\n", postfix);
+         return 0;
+    }
+    
+</pre>
+<a href="https://youtu.be/8-kavDjnx3I?si=Hq5OJZhm570aVKqe"
+target="_blank">Watch Infix Expression to Postfix Expression Video</a>
+</div>
+
+<button class="button" onclick="showProgram('postfix')">13. Evalutate a Postfix Expression
+</button>
+<div id="postfix" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;  // for isdigit()
+#include &lt;math.h&gt;   // for pow()
+#include &lt;string.h&gt;    // for strlen()
+#define SIZE 100
+    int stack[SIZE];
+    int top = -1;
+    // Push element to stack
+    void push(int value)
+    {
+    stack[++top] = value;
+    }
+    // Pop element from stack
+    int pop() 
+    {
+    return stack[top--];
+    }
+    // Evaluate postfix expression with +, -, *, /, ^
+    int evaluatePostfix(char expr[]) {
+    int i;
+    char ch;
+    int op1, op2, result;
+    for (i = 0; expr[i] != '\0'; i++)
+    {
+    ch = expr[i];
+    // Skip spaces
+    if (ch == ' ')
+    continue;
+    // If operand, push to stack
+    if (isdigit(ch))
+     {
+    push(ch - '0'); // Convert char to integer
+    }
+    // If operator, pop operands and evaluate
+    else
+     {
+    op2 = pop();
+    op1 = pop();
+    switch (ch)
+     {
+    case '+': result = op1 + op2; break;
+    case '-': result = op1 - op2; break;
+    case '*': result = op1 * op2; break;
+    case '/': result = op1 / op2; break;
+    case '^': result = (int)pow(op1, op2); break;
+    default:
+    printf("Invalid operator: %c\n", ch);
+    return -1;
+    }
+    push(result);
+    }
+    }
+    return pop(); // Final result
+    }
+    int main() 
+    {
+    char postfix[SIZE];
+    printf("Enter a postfix expression (use space between each token):\n");
+    fgets(postfix, SIZE, stdin);
+    // Remove newline character if present
+    int len = strlen(postfix);
+    if (postfix[len - 1] == '\n')
+     {
+    postfix[len - 1] = '\0';
+    }
+    int result = evaluatePostfix(postfix);
+    printf("Result: %d\n", result);
+    return 0;
+}
+
+
+</pre>
+<a href=""
+target="_blank">Watch  Video</a>
+</div>
+
+<button class="button" onclick="showProgram('BT')">14. Binary Tree Search
+</button>
+<div id="BT" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+    // Node structure
+    struct Node 
+    {
+        int data;
+        struct Node *left, *right;
+    };
+
+    // Create a new node
+    struct Node* newNode(int value) 
+    {
+        struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+        temp->data = value;
+        temp->left = temp->right = NULL;
+        return temp;
+    }
+
+    // Insert a node into the BST
+    struct Node* insert(struct Node* root, int key) 
+    {
+        if (root == NULL)
+        return newNode(key);
+         if (key < root->data)
+        root->left = insert(root->left, key);
+        else if (key > root->data)
+        root->right = insert(root->right, key);
+        return root;
+    }
+    // Find the minimum node (used in deletion)
+    struct Node* findMin(struct Node* node)
+    {
+        while (node && node->left != NULL)
+        node = node->left;
+        return node;
+    }
+
+// Delete a node from the BST
+struct Node* deleteNode(struct Node* root, int key) 
+{
+    if (root == NULL)
+    return root;
+    if (key < root->data)
+    root->left = deleteNode(root->left, key);
+    else if (key > root->data)
+    root->right = deleteNode(root->right, key);
+    else {
+    // Node with only one child or no child
+    if (root->left == NULL) 
+    {
+        struct Node* temp = root->right;
+        free(root);
+        return temp;
+    } 
+    else if (root->right == NULL) 
+    {
+        struct Node* temp = root->left;
+        free(root);
+        return temp;
+    }
+    // Node with two children
+    struct Node* temp = findMin(root->right;)
+    root->data = temp->data;
+    root->right = deleteNode(root->right, temp->data);
+    }
+    return root;
+}
+
+// Inorder Traversal (sorted order display)
+void inorder(struct Node* root) 
+{
+    if (root != NULL) 
+    {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+
+// Display with label
+void displayTree(struct Node* root, const char* msg) 
+{
+    printf("\n%s:\n", msg);
+    inorder(root);
+    printf("\n");
+}
+
+// Main function
+int main() 
+{
+    int initial[] = {18, 15, 40, 50, 30, 17, 41};
+    int n = sizeof(initial) / sizeof(initial[0]);
+    struct Node* root = NULL;
+    // Create initial tree
+    for (int i = 0; i < n; i++) 
+    {
+        root = insert(root, initial[i]);
+    }
+
+    displayTree(root, "Initial Tree");
+    // Insert 45
+    root = insert(root, 45);
+    displayTree(root, "After Inserting 45");
+    // Insert 19
+    root = insert(root, 19);
+    displayTree(root, "After Inserting 19");
+    // Delete 15
+    root = deleteNode(root, 15);
+    displayTree(root, "After Deleting 15");
+    // Delete 17
+    root = deleteNode(root, 17);
+    displayTree(root, "After Deleting 17");
+    // Delete 41
+    root = deleteNode(root, 41);
+    displayTree(root, "After Deleting 41");
+    return 0;
+}
+
+
+</pre>
+<a href=""
+target="_blank">Watch  Video</a>
+</div>
+
+<button class="button" onclick="showProgram('tt')">15. Tree Traversal
+</button>
+<div id="tt" class="program-container content">
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node 
+{
+    int data;
+    struct Node *left, *right;
+};
+// Create a new node
+struct Node* createNode(int value) 
+{
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Insert a value into the BST
+struct Node* insert(struct Node* root, int value) 
+{
+    if (root == NULL) 
+    {
+    return createNode(value);
+    }
+    if (value < root->data)
+        root->left = insert(root->left, value);
+    else if (value > root->data)
+        root->right = insert(root->right, value);
+    return root;
+}
+
+// Inorder traversal (Left, Root, Right)
+void inorder(struct Node* root) 
+{
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+
+// Preorder traversal (Root, Left, Right)
+void preorder(struct Node* root) 
+{
+    if (root != NULL) 
+    {
+        printf("%d ", root->data);
+       preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+// Postorder traversal (Left, Right, Root)
+void postorder(struct Node* root) 
+{
+    if (root != NULL) 
+    {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d ", root->data);
+    }
+}
+
+// Main function
+int main()
+{
+    int elements[] = {2, 5, 1, 3, 9, 0, 6};
+    int n = sizeof(elements) / sizeof(elements[0]);
+    struct Node* root = NULL;
+    // Create the BST
+    for (int i = 0; i < n; i++) 
+    {
+        root = insert(root, elements[i]);
+    }
+    // Perform traversals
+    printf("Inorder Traversal: ");
+    inorder(root);
+    printf("\n");
+    printf("Preorder Traversal: ");
+    preorder(root);
+    printf("\n");
+    printf("Postorder Traversal: ");
+    postorder(root);
+    printf("\n");
+    return 0;
+}
+
+</pre>
+<a href=""
+target="_blank">Watch  Video</a>
+</div>
+
+<h2>Try to write program on your own by clicking the link below</h2>
+<a href="https://www.programiz.com/c-programming/online-compiler/"_blank">Open
+a New Page to Type program </a>
+</div>
+
+<script>
+function showProgram(programId) {
+// Hide all program contents
+const contents = document.querySelectorAll('.program-container');
+contents.forEach(content => {
+content.classList.remove('active');
+});
+// Show the selected program content
+const selectedProgram = document.getElementById(programId);
+selectedProgram.classList.add('active');
+}
+</script>
+</body>
+</html>
