@@ -634,54 +634,83 @@ target="_blank">Watch Recursion GCD Video</a>
 <pre>
 #include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
-#define MAX 5
-int stack[MAX];
-int top = -1;
-void push(int value)
+
+// Define the structure for a stack node
+
+struct Node
 {
-    if (top == MAX - 1) 
-    {
-     printf("Stack Overflow\n");
-    } 
-    else 
-    {
-      stack[++top] = value;
-      printf("Pushed %d to stack\n", value);
+   int data;
+   struct Node* next;
+};
+
+// Function to push an element onto the stack
+
+void push(struct Node** top, int data)
+{
+   struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+   if (!newNode) 
+   {
+      printf("Stack Overflow\n");
+       return;
     }
+    newNode->data = data;
+    newNode->next = *top;
+    *top = newNode;
+    printf("Pushed %d onto stack\n", data);
 }
-void pop()
+
+// Function to pop an element from the stack
+
+int pop(struct Node** top) 
 {
-    if (top == -1) 
+    if (*top == NULL)
     {
         printf("Stack Underflow\n");
-    } else {
-    printf("Popped %d from stack\n", stack[top--]);
-    }
+        return -1;
+      }
+      struct Node* temp = *top;
+      int popped = temp->data;
+      *top = (*top)->next;
+      free(temp);
+      printf("Popped %d from stack\n", popped);
+      return popped;
 }
-void display()
+
+// Function to display the stack
+
+void display(struct Node* top) 
 {
-    if (top == -1)
+    if (top == NULL)
+   {
+      printf("Stack is empty\n");
+      return;
+   }
+   struct Node* temp = top;
+    printf("Stack elements: ");
+    while (temp) 
     {
-        printf("Stack is empty\n"); 
-    } else {
-    printf("Stack contents: ");
-    for (int i = top; i &gt;= 0; i--)
-    {
-        printf("%d ", stack[i]);
-    }
-    printf("\n");
-    }
+       printf("%d ", temp->data);
+       temp = temp->next;
+     }
+   printf("\n");
 }
+
 int main() 
 {
-    push(10);
-    push(20);
-    push(30);
-    display();
-    pop();
-    display();
+     struct Node* top = NULL;
+     push(&top, 10);
+     push(&top, 20);
+     push(&top, 30);
+     display(top);
+     pop(&top);
+     display(top);
+     pop(&top);
+    display(top);
+    pop(&top);
+    display(top);
     return 0;
 }
+
 </pre>
 <a href="https://youtu.be/kI-NFJXx3wo?si=5eLiHhB2Z79NGCGF" target="_blank">Watch
 Stack Working Video</a>
