@@ -610,18 +610,22 @@ GCD</button>
 <div id="recursionGCD" class="program-container content">
 <pre>
 #include &lt;stdio.h&gt;
+
 int gcd(int a, int b) 
 {
     if (b == 0) 
-    {
         return a;
-    }
     return gcd(b, a % b);
 }
+
 int main() 
 {
-    int a = 56, b = 98;    
-    printf("GCD of %d and %d is %d\n", a, b, gcd(a, b));
+    int a = 56, b = 98, c = 28;
+
+    int result = gcd(a, gcd(b, c));
+
+    printf("GCD of %d, %d and %d is %d\n", a, b, c, result);
+
     return 0;
 }
 </pre>
